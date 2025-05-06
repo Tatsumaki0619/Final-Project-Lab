@@ -3,10 +3,12 @@ import java.util.Scanner;
 import java.io.*;
 
 /**
- * Write a description of class RegistrationDemo here.
+ * This is a program that will generate an analysis for drivers' information and another two tables for overdue drivers 
+ * and almost due driver's information. The user needs to provide the input file(registration.csv) and the path to the output file.
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Qianyi Li
+ * @version v1.0
+ * @since 5/5/2025
  */
 public class RegistrationDemo
 {
@@ -27,6 +29,6 @@ public class RegistrationDemo
         String almostOverdueInMsg = "Owners with registration expiring in three months or less";
         dmv.printArrayToFile(almostOverdue, almostOverdueInMsg);
         
-        System.out.println(dmv.getOutputFileName());
+        System.out.println("The output file can be found at: "+dmv.getOutputFileName());
     }
 }
