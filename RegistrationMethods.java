@@ -4,17 +4,16 @@ import java.io.*;
 
 /**
  * This is a program that works as a blueprint to help organize and anaylize the inforamtion 
- * based on the file the user provided. This program can generate the analysises for 
- * drivers' information and overdue  and almostoverdue drivers' inforamtion
+ * based on the file the user provided. This program can generate the analysis for 
+ * drivers' information, overdue driver and almostoverdue drivers' inforamtion
  *
  * @author Qianyi Li
  * @version v1.0
  * @since 5/5/2025
  */
-
 public class RegistrationMethods
 {
-    private String inputFileName = "", outputFileName = "";
+    private String inputFileName, outputFileName;
     static final int REG_MONTH = 4;
     static final int REG_YEAR = 2025;
     
@@ -23,16 +22,19 @@ public class RegistrationMethods
      */
     public void setFileName() throws IOException{
         Scanner keyboard = new Scanner(System.in);
-        System.out.print("Please provide the input file's location: ");
+        System.out.print("Please provide the input file's location (ie. c:/tmp/registration.csv): ");
         String fileName = keyboard.nextLine();
         File test = new File(fileName);
+        
         while(!test.exists()){
             System.out.print("Please check again and provide the file's location: ");
             fileName = keyboard.nextLine();
             test = new File(fileName);
         }
+        
         inputFileName = fileName;
-        System.out.print("Please provide the output file's location: ");
+        
+        System.out.print("Please provide the output file's location (ie. c:/tmp/output.txt): ");
         outputFileName = keyboard.nextLine();
     }
     
@@ -46,6 +48,7 @@ public class RegistrationMethods
         Scanner inputFile = new Scanner(file);
         int accumulator = 0;
         inputFile.nextLine();
+        
         while(inputFile.hasNextLine()){
             accumulator++;
             inputFile.nextLine();
@@ -57,7 +60,7 @@ public class RegistrationMethods
     
     /**
      * This is a methof that will generate the dirver's information list based on the file the user provided.
-     * @param inArray a array that stores information for each drive
+     * @param inArray an array that stores information for each drive
      */
     public void processTextToArray(CarOwner[] inArray)throws IOException{
         CarOwner carOwner = new CarOwner();
@@ -77,8 +80,8 @@ public class RegistrationMethods
     
     /**
      * This is a method that will print information to the output fie based on the program's analysis.
-     * @param1 inArray This contains information for each driver
-     * @param2 inMsg This provides information for the header of the information that will be printed.
+     * @param inArray This contains information for each driver
+     * @param inMsg This provides information for the header of the information that will be printed.
      */
     public void printArrayToFile(CarOwner[] inArray, String inMsg)throws IOException{
         FileWriter fileWriter = new FileWriter(outputFileName, true);
@@ -119,6 +122,7 @@ public class RegistrationMethods
 
         return overdue;
     }
+    
     /**
      * This is a method that print out information of almost overdue drivers.
      * @param inArray this list contains information of all the drivers based on the user's input file
@@ -129,7 +133,7 @@ public class RegistrationMethods
         int monthsTotal = REG_YEAR * 12 + REG_MONTH;
 
         for(int i = 0; i < inArray.length; i++){
-            if(( - inArray[i].getYear() + REG_YEAR)*12 - inArray[i].getMonth() + 4 > 9 && monthsTotal - (inArray[i].getYear()*12 + inArray[i].getMonth()) <= 12){
+            if( monthsTotal - (inArray[i].getYear()*12 + inArray[i].getMonth()) > 9 && monthsTotal - (inArray[i].getYear()*12 + inArray[i].getMonth()) <= 12){
                 count++;
             }
         }
@@ -137,7 +141,7 @@ public class RegistrationMethods
         int index = 0;
         CarOwner[] nearOverdue = new CarOwner[count];
         for(int i = 0; i < inArray.length; i++){
-            if(( - inArray[i].getYear() + REG_YEAR)*12 - inArray[i].getMonth() + 4 > 9 && monthsTotal - (inArray[i].getYear()*12 + inArray[i].getMonth()) <= 12){
+            if( monthsTotal - (inArray[i].getYear()*12 + inArray[i].getMonth()) > 9 && monthsTotal - (inArray[i].getYear()*12 + inArray[i].getMonth()) <= 12){
                 nearOverdue[index] = inArray[i];
                 index++;
             }
